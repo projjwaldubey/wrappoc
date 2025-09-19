@@ -69,6 +69,27 @@ kubectl get appprojects -n argocd
 - **Sync Policy**: Automated with self-heal and prune enabled
 - **Formats**: Available in both YAML and JSON formats
 
+## YAML to JSON Conversion
+
+This repository includes a JavaScript-based conversion tool to convert YAML manifests to JSON format:
+
+### Using the Conversion Script:
+```bash
+# Install dependencies
+npm install
+
+# Run conversion
+npm run convert
+# or
+node convert-yaml-to-json.js
+```
+
+The script uses the `js-yaml` library and automatically:
+- Converts all YAML files to JSON format
+- Handles multi-document YAML files (creates arrays)
+- Preserves proper JSON formatting
+- Creates output directories if needed
+
 ## Customization
 
 To customize for your specific application:
@@ -77,6 +98,7 @@ To customize for your specific application:
 2. Modify the source repository URL and path
 3. Adjust resource permissions in the AppProject
 4. Update the deployment configuration in `k8s-manifests/`
+5. Re-run the conversion script if you modify YAML files
 
 ## Troubleshooting
 

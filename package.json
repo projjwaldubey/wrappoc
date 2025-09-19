@@ -1,0 +1,17 @@
+{
+  "name": "wrappoc",
+  "version": "1.0.0",
+  "description": "This repository contains the necessary YAML manifests to set up ArgoCD project and namespace for the WrapPoc application.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "convert": "node convert-yaml-to-json.js",
+    "yaml-to-json": "node convert-yaml-to-json.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "js-yaml": "^4.1.0"
+  }
+}
