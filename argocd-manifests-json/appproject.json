@@ -1,0 +1,72 @@
+{
+  "apiVersion": "argoproj.io/v1alpha1",
+  "kind": "AppProject",
+  "metadata": {
+    "name": "wrappoc-project",
+    "namespace": "argocd",
+    "labels": {
+      "argocd.argoproj.io/managed-by": "argocd"
+    }
+  },
+  "spec": {
+    "description": "WrapPoc Application Project",
+    "sourceRepos": [
+      "*"
+    ],
+    "destinations": [
+      {
+        "namespace": "wrappoc-app",
+        "server": "https://kubernetes.default.svc"
+      },
+      {
+        "namespace": "argocd",
+        "server": "https://kubernetes.default.svc"
+      }
+    ],
+    "clusterResourceWhitelist": [
+      {
+        "group": "",
+        "kind": "Namespace"
+      },
+      {
+        "group": "rbac.authorization.k8s.io",
+        "kind": "ClusterRole"
+      },
+      {
+        "group": "rbac.authorization.k8s.io",
+        "kind": "ClusterRoleBinding"
+      }
+    ],
+    "namespaceResourceWhitelist": [
+      {
+        "group": "",
+        "kind": "*"
+      },
+      {
+        "group": "apps",
+        "kind": "*"
+      },
+      {
+        "group": "extensions",
+        "kind": "*"
+      },
+      {
+        "group": "networking.k8s.io",
+        "kind": "*"
+      }
+    ],
+    "roles": [
+      {
+        "name": "admin",
+        "description": "Admin privileges for wrappoc-project",
+        "policies": [
+          "p, proj:wrappoc-project:admin, applications, *, wrappoc-project/*, allow",
+          "p, proj:wrappoc-project:admin, repositories, *, *, allow"
+        ],
+        "groups": [
+          "wrappoc-admins"
+        ]
+      }
+    ]
+  }
+}

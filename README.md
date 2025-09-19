@@ -9,8 +9,14 @@ This repository contains the necessary YAML manifests to set up ArgoCD project a
 │   ├── namespace.yaml     # Creates namespaces for the app and ArgoCD
 │   ├── appproject.yaml    # Defines ArgoCD AppProject with RBAC
 │   └── application.yaml   # ArgoCD Application configuration
-└── k8s-manifests/
-    └── deployment.yaml    # Sample application deployment and service
+├── argocd-manifests-json/
+│   ├── namespace.json     # JSON version of namespace manifests
+│   ├── appproject.json    # JSON version of ArgoCD AppProject
+│   └── application.json   # JSON version of ArgoCD Application
+├── k8s-manifests/
+│   └── deployment.yaml    # Sample application deployment and service
+└── k8s-manifests-json/
+    └── deployment.json    # JSON version of deployment manifests
 ```
 
 ## Setup Instructions
@@ -31,8 +37,14 @@ source:
 ### Step 2: Apply ArgoCD Manifests
 Apply the ArgoCD manifests to your cluster:
 
+**Using YAML files:**
 ```bash
 kubectl apply -f argocd-manifests/
+```
+
+**Using JSON files (alternative):**
+```bash
+kubectl apply -f argocd-manifests-json/
 ```
 
 This will create:
@@ -55,6 +67,7 @@ kubectl get appprojects -n argocd
 - **Target Namespace**: `wrappoc-app`
 - **Source Path**: `k8s-manifests/`
 - **Sync Policy**: Automated with self-heal and prune enabled
+- **Formats**: Available in both YAML and JSON formats
 
 ## Customization
 
