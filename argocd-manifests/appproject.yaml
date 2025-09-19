@@ -1,0 +1,50 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: wrappoc-project
+  namespace: argocd
+  labels:
+    argocd.argoproj.io/managed-by: argocd
+spec:
+  description: "WrapPoc Application Project"
+  
+  # Source repositories that applications within this project can use
+  sourceRepos:
+    - '*'  # Allow all repositories, or specify your GitLab repo URL
+  
+  # Destination clusters and namespaces that applications can deploy to
+  destinations:
+    - namespace: wrappoc-app
+      server: https://kubernetes.default.svc
+    - namespace: argocd
+      server: https://kubernetes.default.svc
+  
+  # Cluster roles that can be used by applications
+  clusterResourceWhitelist:
+    - group: ''
+      kind: Namespace
+    - group: 'rbac.authorization.k8s.io'
+      kind: ClusterRole
+    - group: 'rbac.authorization.k8s.io'
+      kind: ClusterRoleBinding
+  
+  # Namespace-level resources that can be managed
+  namespaceResourceWhitelist:
+    - group: ''
+      kind: '*'
+    - group: 'apps'
+      kind: '*'
+    - group: 'extensions'
+      kind: '*'
+    - group: 'networking.k8s.io'
+      kind: '*'
+  
+  # RBAC roles for this project
+  roles:
+    - name: admin
+      description: "Admin privileges for wrappoc-project"
+      policies:
+        - p, proj:wrappoc-project:admin, applications, *, wrappoc-project/*, allow
+        - p, proj:wrappoc-project:admin, repositories, *, *, allow
+      groups:
+        - wrappoc-admins
